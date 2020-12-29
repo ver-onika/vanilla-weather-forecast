@@ -1,0 +1,55 @@
+body {
+  background-image: url("../images/lowpoly_background.png");
+  background-size: cover;
+  color: #00313d;
+  font-size: 16px;
+  font-family: "Open Sans", sans-serif;
+}
+.container {
+  margin: 20px auto 0px;
+}
+.weather-container {
+  max-width: 800px;
+  width: 80%;
+  margin: 40px auto;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  background-color: rgba(235, 251, 255, 0.4);
+  box-shadow: 0px 0px 20px 20px rgba(235, 251, 255, 0.4);
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.weather-container:hover {
+  background-color: rgba(235, 251, 255, 0.7);
+  box-shadow: 0px 0px 25px 25px rgba(235, 251, 255, 0.7);
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-family: "Pacifico", cursive;
+}
+h2 {
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+}
+
+p {
+  text-align: center;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+img#current-weather-icon {
+  max-width: 100px;
+  display: block;
+}
