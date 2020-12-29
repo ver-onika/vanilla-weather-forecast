@@ -33,31 +33,68 @@
       <div class="weather-container">
         <h1 id="city">Prague, CZ</h1>
         <h2 id="current-day">Monday</h2>
-        <p>
-          <span id="current-date-time">28.12.2020 13:04</span> <br />
-          <span id="current-temperature">10</span>
-          <span id="temp-units">°C | °F</span>
-        </p>
-        <div class="row">
-          <div class="col">
-            <img id="current-weather-icon" src="images/sun.png" alt="sunny" />
+        <p id="current-date-time">28.12.2020 13:04</p>
+        <div class="box">
+          <div class="weather-image">
+            <img
+              class="big-icon"
+              id="current-weather-icon"
+              src="images/sun.png"
+              alt="sunny"
+            />
           </div>
-          <div class="col">
+          <div class="weather-info">
             <ul>
+              <li>
+                <span id="current-temperature">10</span>
+                <span id="temp-units">°C °F</span>
+              </li>
               <li id="current-weather">Sunny</li>
               <li>
                 Feels like
                 <span id="current-feels-like">8</span>°C
               </li>
+              <li>Humidity <span id="current-humidity">70</span> %</li>
               <li>
-                Humidity
-                <span id="current-humidity">70</span> %
-              </li>
-              <li>
-                Pressure<span id="current-pressure">1018</span>
+                Pressure <span id="current-pressure">1018</span>
                 hPa
               </li>
             </ul>
+          </div>
+        </div>
+
+        <div class="next-days">
+          <div class="next-day">
+            <h3>Tuesday</h3>
+            <img
+              src="images/cloud_sun.png"
+              alt="cloud_sun"
+              class="small-icon"
+            />
+            <h4>8 | 5°C</h4>
+          </div>
+          <div class="next-day">
+            <h3>Wednesday</h3>
+            <img
+              src="images/cloud_sun.png"
+              alt="cloud_sun"
+              class="small-icon"
+            />
+            <h4>13 | 7°C</h4>
+          </div>
+          <div class="next-day">
+            <h3>Thursday</h3>
+            <img src="images/cloud.png" alt="cloud_sun" class="small-icon" />
+            <h4>11 | 6°C</h4>
+          </div>
+          <div class="next-day">
+            <h3>Friday</h3>
+            <img
+              src="images/lightning_sun.png"
+              alt="cloud_sun"
+              class="small-icon"
+            />
+            <h4>14 | 8°C</h4>
           </div>
         </div>
       </div>
