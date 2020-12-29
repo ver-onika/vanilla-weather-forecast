@@ -4,6 +4,7 @@ body {
   color: #00313d;
   font-size: 16px;
   font-family: "Open Sans", sans-serif;
+  line-height: 1.5;
 }
 .container {
   margin: 20px auto 0px;
@@ -20,9 +21,18 @@ body {
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.weather-container:hover {
-  background-color: rgba(235, 251, 255, 0.7);
-  box-shadow: 0px 0px 25px 25px rgba(235, 251, 255, 0.7);
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.big-icon {
+  padding-right: 0px;
+}
+
+.weather-info {
+  padding-left: 40px;
 }
 
 h1 {
@@ -30,14 +40,32 @@ h1 {
   font-size: 2.5rem;
   font-family: "Pacifico", cursive;
 }
-h2 {
+h2,
+h3 {
   text-align: center;
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
+  margin: 0px;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  display: inline-block;
+  font-family: "Pacifico", cursive;
+  font-size: 1.25rem;
+  margin: 0;
 }
 
 p {
   text-align: center;
+  margin: 0px;
 }
 
 ul {
@@ -49,7 +77,69 @@ li {
   list-style: none;
 }
 
-img#current-weather-icon {
-  max-width: 100px;
+#current-date-time {
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+#current-temperature {
+  font-family: "Pacifico", cursive;
+  font-size: 2.5rem;
+}
+
+#temp-units {
+  font-family: "Pacifico", cursive;
+  font-size: 1.5rem;
+}
+
+#current-weather {
+  font-weight: bolder;
+  text-transform: capitalize;
+}
+
+.next-days {
+  margin: 40px 0px 0px;
+}
+
+.next-days div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  background-color: rgba(235, 251, 255, 0.1);
+  box-shadow: 0px 0px 5px 5px rgba(235, 251, 255, 0.1);
+  padding: 10px;
+  margin: 10px;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.next-days div:hover {
+  background-color: rgba(235, 251, 255, 0.4);
+  box-shadow: 0px 0px 5px 5px rgba(235, 251, 255, 0.4);
+}
+
+.big-icon {
+  max-width: 150px;
   display: block;
+}
+
+.small-icon {
+  width: 100px;
+  padding: 10px;
+}
+
+.footer {
+  opacity: 70%;
+}
+
+.footer a {
+  text-decoration: none;
+  color: #009fc7;
+}
+
+.footer a:hover {
+  color: #00313d;
 }
