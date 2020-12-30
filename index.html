@@ -24,6 +24,8 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&family=Pacifico&display=swap"
       rel="stylesheet"
     />
+    <!--import Axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!--styles-->
     <link rel="stylesheet" href="src/style.css" />
   </head>
@@ -31,9 +33,9 @@
   <body>
     <div class="container">
       <div class="weather-container">
-        <h1 id="city">Prague, CZ</h1>
+        <h1 id="city"></h1>
         <h2 id="current-day">Monday</h2>
-        <p id="current-date-time">28.12.2020 13:04</p>
+        <p id="current-date-time"></p>
         <div class="box">
           <div class="weather-image">
             <img
@@ -49,7 +51,7 @@
                 <span id="current-temperature">10</span>
                 <span id="temp-units">°C °F</span>
               </li>
-              <li id="current-weather">Sunny</li>
+              <li id="current-weather-description">Sunny</li>
               <li>
                 Feels like
                 <span id="current-feels-like">8</span>°C
