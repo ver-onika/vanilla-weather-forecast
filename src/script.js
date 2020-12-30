@@ -31,6 +31,7 @@ let currentTemp = Math.round(response.data.main.temp);
   let currentHumidity = response.data.main.humidity;
   let currentPressure = response.data.main.pressure;
   let currentWeatherDescription = (response.data.weather[0]).description;
+  let currentWeatherIconName = (response.data.weather[0].main).toLowerCase()
   let city = response.data.name;
   let country = response.data.sys.country;
   let currentDateTime = response.data.dt*1000
@@ -40,6 +41,7 @@ let currentTemp = Math.round(response.data.main.temp);
   let feelsLikeElement = document.querySelector("#current-feels-like");
   let humidityElement = document.querySelector("#current-humidity");
   let pressureElement = document.querySelector("#current-pressure");
+  let iconElement = document.querySelector("#current-weather-icon");
 
   let h1City = document.querySelector("h1");
   h1City.innerHTML = `${city}, ${country}` || h1City.innerHTML;
@@ -51,9 +53,12 @@ let currentTemp = Math.round(response.data.main.temp);
   feelsLikeElement.innerHTML = currentFeelsLike;
   humidityElement.innerHTML = currentHumidity;
   pressureElement.innerHTML = currentPressure;
+  iconElement.setAttribute("src", `images/${currentWeatherIconName}.png`)
+  iconElement.setAttribute("alt", currentWeatherIconName)
 } 
 
-let cityName = "Paris";
+//--------------------------------
+let cityName = "Prague";
 let units = "metric";
 let apiKey = "addf72680d56ebf55846fea13531f597";
 let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
