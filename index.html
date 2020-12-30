@@ -32,6 +32,20 @@
 
   <body>
     <div class="container">
+      <form id="search-form">
+        <input
+          type="search"
+          placeholder="Enter a city"
+          class="searching-form"
+          id="city-search"
+        />
+        <button type="submit" id="search-button" class="button">
+          <i class="fas fa-search-location fa-lg"></i>
+        </button>
+        <button type="button" id="location-button" class="button">
+          <i class="fas fa-map-marker-alt fa-lg"></i>
+        </button>
+      </form>
       <div class="weather-container">
         <h1 id="city"></h1>
         <h2 id="current-day"></h2>

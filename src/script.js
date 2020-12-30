@@ -25,8 +25,7 @@ function formatDate(timestamp) {
 
 // Open Weather API - display current data (city name, temp etc.)
 function showWeather(response) {
-console.log(response.data.main.temp);
-let currentTemp = Math.round(response.data.main.temp);
+  let currentTemp = Math.round(response.data.main.temp);
   let currentFeelsLike = Math.round(response.data.main.feels_like);
   let currentHumidity = response.data.main.humidity;
   let currentPressure = response.data.main.pressure;
@@ -57,6 +56,38 @@ let currentTemp = Math.round(response.data.main.temp);
   iconElement.setAttribute("alt", currentWeatherIconName)
 } 
 
+// get the current weather (temp, hum...) in the city
+function getCityWeather (event) {
+  event.preventDefault();
+  let citySearch = document.querySelector("#city-search");
+  let enteredCity = citySearch.value.trim().toLowerCase();
+  if (enteredCity !== "") {
+    citySearch.value = "";
+  // Open Weather API - ask for current weather for the city
+  let apiKey = "addf72680d56ebf55846fea13531f597";
+  let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
+  let units = "metric";
+  let apiUrl = `${apiEndpoint}?q=${enteredCity}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(showWeather);
+  }
+}
+
+// geolocation
+function getLocationWeather (position) {
+  let currentLatitude = position.coords.latitude;
+  let currentLongitude = position.coords.longitude;
+  // Open Weather API - ask for current weather for qeolocation
+  let apiKey = "addf72680d56ebf55846fea13531f597";
+  let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
+  let units = "metric";
+  let apiUrl = `${apiEndpoint}?lat=${currentLatitude}&lon=${currentLongitude}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(showWeather);
+}
+
+function getGeolocationCoords (event) {
+  navigator.geolocation.getCurrentPosition(getLocationWeather);
+}
+
 //--------------------------------
 let cityName = "Prague";
 let units = "metric";
@@ -67,3 +98,9 @@ let apiUrl = `${apiEndpoint}?q=${cityName}&appid=${apiKey}&units=${units}`;
 axios.get(apiUrl).then(showWeather);
 
 formatDate(Date.now());
+
+let locationButton = document.querySelector("#location-button");
+locationButton.addEventListener("click", getGeolocationCoords);
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", getCityWeather);

@@ -8,10 +8,10 @@ body {
 }
 .container {
   margin: 20px auto 0px;
-}
-.weather-container {
   max-width: 800px;
   width: 80%;
+}
+.weather-container {
   margin: 40px auto;
   border: 1px solid transparent;
   border-radius: 0.5rem;
@@ -132,6 +132,47 @@ li {
 .small-icon {
   width: 100px;
   padding: 10px;
+}
+
+#search-form {
+  display: flex;
+  margin: 0 auto;
+}
+
+#city-search {
+  height: 100%;
+  display: flow-root;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  color: #495057;
+  background-clip: border-box;
+  background-color: rgba(235, 251, 255, 0.4);
+  border: 1px solid #009fc7;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  margin-left: 0.5rem;
+  color: #009fc7;
+  background-color: transparent;
+  border: 1px solid #009fc7;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.button:hover {
+  cursor: pointer;
+  color: #fff;
+  background-color: #009fc7;
+  border-color: #009fc7;
+}
+
+.fas {
+  line-height: 1;
 }
 
 .footer {
