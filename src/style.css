@@ -6,26 +6,6 @@ body {
   font-family: "Open Sans", sans-serif;
   line-height: 1.5;
 }
-.container {
-  margin: 20px auto 0px;
-  max-width: 800px;
-  width: 80%;
-}
-.weather-container {
-  margin: 40px auto;
-  border: 1px solid transparent;
-  border-radius: 0.5rem;
-  background-color: rgba(235, 251, 255, 0.4);
-  box-shadow: 0px 0px 20px 20px rgba(235, 251, 255, 0.4);
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 h1 {
   text-align: center;
@@ -59,6 +39,8 @@ h4 {
 p {
   text-align: center;
   margin: 0px;
+  font-style: italic;
+  margin-bottom: 15px;
 }
 
 ul {
@@ -70,42 +52,30 @@ li {
   list-style: none;
 }
 
-#current-date-time {
-  font-style: italic;
-  margin-bottom: 15px;
+.container {
+  margin: 20px auto 0px;
+  max-width: 800px;
+  width: 80%;
+}
+.weather-container {
+  margin: 40px auto;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  background-color: rgba(235, 251, 255, 0.4);
+  box-shadow: 0px 0px 20px 20px rgba(235, 251, 255, 0.4);
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-#current-temperature {
-  font-family: "Pacifico", cursive;
-  font-size: 2.5rem;
-}
-
-#celsius,
-#fahrenheit {
-  font-family: "Pacifico", cursive;
-  font-size: 1.5rem;
-  margin: 0;
-  text-decoration: none;
-  color: rgba(0, 49, 61, 0.3);
-  cursor: pointer;
-}
-
-#celsius.active,
-#fahrenheit.active {
-  color: rgba(0, 49, 61, 0.9);
-  cursor: default;
-}
-
-#current-weather-description {
-  font-weight: bolder;
-}
-
-#current-weather-description::first-letter {
-  text-transform: capitalize;
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
 }
 
 .next-days {
-  margin: 30px 0px 0px;
+  margin: 0px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -145,6 +115,40 @@ li {
   padding: 10px;
 }
 
+.forecast-info {
+  opacity: 50%;
+  font-family: "Pacifico", cursive;
+}
+
+#current-temperature {
+  font-family: "Pacifico", cursive;
+  font-size: 2.5rem;
+}
+
+#celsius,
+#fahrenheit {
+  font-family: "Pacifico", cursive;
+  font-size: 1.5rem;
+  margin: 0;
+  text-decoration: none;
+  color: rgba(0, 49, 61, 0.3);
+  cursor: pointer;
+}
+
+#celsius.active,
+#fahrenheit.active {
+  color: rgba(0, 49, 61, 0.9);
+  cursor: default;
+}
+
+#current-weather-description {
+  font-weight: bolder;
+}
+
+#current-weather-description::first-letter {
+  text-transform: capitalize;
+}
+
 #search-form {
   display: flex;
   margin: 0 auto;
@@ -162,6 +166,10 @@ li {
   border: 1px solid #009fc7;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.hidden {
+  display: none;
 }
 
 .button {
@@ -187,12 +195,13 @@ li {
 }
 
 .footer {
+  font-style: normal;
   opacity: 70%;
 }
 
 .footer a {
   text-decoration: none;
-  color: #009fc7;
+  color: rgb(235, 251, 255);
 }
 
 .footer a:hover {
