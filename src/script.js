@@ -35,6 +35,9 @@ function showWeather(response) {
   let country = response.data.sys.country;
   let currentDateTime = response.data.dt*1000
 
+  currentCelsiusTemp = currentTemp;
+  currentCelsiusTempFeelsLike = currentFeelsLike;
+
   let tempElement = document.querySelector("#current-temperature");
   let weatherDescriptionElement = document.querySelector("#current-weather-description");
   let feelsLikeElement = document.querySelector("#current-feels-like");
@@ -49,7 +52,7 @@ function showWeather(response) {
 
   tempElement.innerHTML = currentTemp;
   weatherDescriptionElement.innerHTML = currentWeatherDescription;
-  feelsLikeElement.innerHTML = currentFeelsLike;
+  feelsLikeElement.innerHTML = `${currentFeelsLike} °C`;
   humidityElement.innerHTML = currentHumidity;
   pressureElement.innerHTML = currentPressure;
   iconElement.setAttribute("src", `images/${currentWeatherIconName}.png`)
@@ -64,10 +67,10 @@ function getCityWeather (event) {
   if (enteredCity !== "") {
     citySearch.value = "";
   // Open Weather API - ask for current weather for the city
-  let apiKey = "addf72680d56ebf55846fea13531f597";
-  let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
-  let units = "metric";
-  let apiUrl = `${apiEndpoint}?q=${enteredCity}&appid=${apiKey}&units=${units}`;
+  //let apiKey = "addf72680d56ebf55846fea13531f597";
+  //let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
+  //let units = "metric";
+  apiUrl = `${apiEndpoint}?q=${enteredCity}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(showWeather);
   }
 }
@@ -77,10 +80,10 @@ function getLocationWeather (position) {
   let currentLatitude = position.coords.latitude;
   let currentLongitude = position.coords.longitude;
   // Open Weather API - ask for current weather for qeolocation
-  let apiKey = "addf72680d56ebf55846fea13531f597";
-  let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
-  let units = "metric";
-  let apiUrl = `${apiEndpoint}?lat=${currentLatitude}&lon=${currentLongitude}&appid=${apiKey}&units=${units}`;
+  //let apiKey = "addf72680d56ebf55846fea13531f597";
+  //let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
+  //let units = "metric";
+  apiUrl = `${apiEndpoint}?lat=${currentLatitude}&lon=${currentLongitude}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(showWeather);
 }
 
@@ -88,19 +91,55 @@ function getGeolocationCoords (event) {
   navigator.geolocation.getCurrentPosition(getLocationWeather);
 }
 
+// C->F clicking the link will not refresh the page, show temperature (current and feels like in °F), change style of selected degrees (switch class active)
+function changeToFahrenheit (event) {
+  event.preventDefault();
+  let currentTemperatureElement = document.querySelector("#current-temperature");
+  let currentFeelsLikeElement = document.querySelector("#current-feels-like");
+  let currentFahrenheitTemp = Math.round((currentCelsiusTemp*9)/5+32);
+  let currentFahrenheitTempFeelsLike = Math.round((currentCelsiusTempFeelsLike*9)/5+32)
+  currentTemperatureElement.innerHTML = currentFahrenheitTemp;
+  currentFeelsLikeElement.innerHTML = `${currentFahrenheitTempFeelsLike} °F`
+  fahrenheit.classList.add("active");
+  celsius.classList.remove("active");
+}
+ // F->C clicking the link will not refresh the page, show temperature (current and feels like in °C), change style of selected degrees (switch class active)
+function changeToCelsius (event) {
+  event.preventDefault();
+  let currentTemperatureElement = document.querySelector("#current-temperature");
+  let currentFeelsLikeElement = document.querySelector("#current-feels-like");
+  currentTemperatureElement.innerHTML = currentCelsiusTemp;
+  currentFeelsLikeElement.innerHTML = `${currentCelsiusTempFeelsLike} °C`;
+  celsius.classList.add("active");
+  fahrenheit.classList.remove("active");
+}
+
 //--------------------------------
-let cityName = "Prague";
+
+// global variables:
+// celsius temperature - for units conversion
+// API key, endpoint and units
+let currentCelsiusTemp = null;
+let currentCelsiusTempFeelsLike = null;
 let units = "metric";
 let apiKey = "addf72680d56ebf55846fea13531f597";
 let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
-let apiUrl = `${apiEndpoint}?q=${cityName}&appid=${apiKey}&units=${units}`;
 
+let defaultCityName = "Prague";
+let apiUrl = `${apiEndpoint}?q=${defaultCityName}&appid=${apiKey}&units=${units}`;
 axios.get(apiUrl).then(showWeather);
 
 formatDate(Date.now());
 
+// event listeners: buttons and units links
 let locationButton = document.querySelector("#location-button");
 locationButton.addEventListener("click", getGeolocationCoords);
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", getCityWeather);
+
+let fahrenheitLink = document.querySelector("#fahrenheit");
+fahrenheitLink.addEventListener("click", changeToFahrenheit);
+
+let celsiusLink = document.querySelector("#celsius");
+celsiusLink.addEventListener("click", changeToCelsius);
