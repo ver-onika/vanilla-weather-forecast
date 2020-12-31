@@ -57,7 +57,41 @@ function showWeather(response) {
   pressureElement.innerHTML = currentPressure;
   iconElement.setAttribute("src", `images/${currentWeatherIconName}.png`)
   iconElement.setAttribute("alt", currentWeatherIconName)
+
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
 } 
+
+// get names of next days for the forecast
+function getDayName(timestamp) {
+  let time = new Date(timestamp);
+  let dayIndex = time.getDay();
+  let weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  return weekDays[dayIndex];
+}
+
+// show day, icon, temperature and perceived temperature for next 4 days
+function showForecast(response) {
+  let forecastElement = document.querySelector(".next-days")
+  let forecast = null;
+  let iconName = null;
+  forecastElement.innerHTML = null
+
+  for (let index = 8; index <= 32; index+=8) {
+    forecast = response.data.list[index];
+    iconName = (forecast.weather[0].main).toLowerCase();
+    console.log(forecast.main);
+    let temp = forecast.main.temp;
+    let tempFeelsLike = forecast.main.feels_like;
+    forecastElement.innerHTML += `
+    <div>
+    <h3>${getDayName(forecast.dt*1000)}</h3>
+    <img src="images/${iconName}.png" alt="${iconName}" class="small-icon" />
+    <h4 class="celsiusForecast">${Math.round(temp)} | <i class="fas fa-child fa-sm"></i> ${Math.round(tempFeelsLike)}°C</h4>
+     <h4 class="fahrenheitForecast hidden">${Math.round((temp*9)/5+32)} | <i class="fas fa-child fa-sm"></i> ${Math.round((tempFeelsLike*9)/5+32)}°F</h4>
+    </div>`
+  }
+}//
 
 // get the current weather (temp, hum...) in the city
 function getCityWeather (event) {
@@ -67,11 +101,11 @@ function getCityWeather (event) {
   if (enteredCity !== "") {
     citySearch.value = "";
   // Open Weather API - ask for current weather for the city
-  //let apiKey = "addf72680d56ebf55846fea13531f597";
-  //let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
-  //let units = "metric";
   apiUrl = `${apiEndpoint}?q=${enteredCity}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(showWeather);
+  //Open Weather API - ask for forecast
+  apiUrlForecast = `${apiEndpointForecast}?q=${enteredCity}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrlForecast).then(showForecast);
   }
 }
 
@@ -80,42 +114,47 @@ function getLocationWeather (position) {
   let currentLatitude = position.coords.latitude;
   let currentLongitude = position.coords.longitude;
   // Open Weather API - ask for current weather for qeolocation
-  //let apiKey = "addf72680d56ebf55846fea13531f597";
-  //let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
-  //let units = "metric";
   apiUrl = `${apiEndpoint}?lat=${currentLatitude}&lon=${currentLongitude}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(showWeather);
+  //Open Weather API - ask for forecast
+  apiUrlForecast = `${apiEndpointForecast}?lat=${currentLatitude}&lon=${currentLongitude}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrlForecast).then(showForecast);
 }
-
+// get coordinates of the device
 function getGeolocationCoords (event) {
   navigator.geolocation.getCurrentPosition(getLocationWeather);
 }
 
-// C->F clicking the link will not refresh the page, show temperature (current and feels like in °F), change style of selected degrees (switch class active)
+// C->F
+// show temperature (current and feels like in °F), change style of selected degrees (switch class active)
 function changeToFahrenheit (event) {
   event.preventDefault();
   let currentTemperatureElement = document.querySelector("#current-temperature");
   let currentFeelsLikeElement = document.querySelector("#current-feels-like");
   let currentFahrenheitTemp = Math.round((currentCelsiusTemp*9)/5+32);
-  let currentFahrenheitTempFeelsLike = Math.round((currentCelsiusTempFeelsLike*9)/5+32)
+  let currentFahrenheitTempFeelsLike = Math.round((currentCelsiusTempFeelsLike*9)/5+32);
   currentTemperatureElement.innerHTML = currentFahrenheitTemp;
   currentFeelsLikeElement.innerHTML = `${currentFahrenheitTempFeelsLike} °F`
-  fahrenheit.classList.add("active");
-  celsius.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+  celsiusLink.classList.remove("active");
+  document.querySelectorAll(".fahrenheitForecast").forEach(function(el) {el.classList.remove("hidden")});
+  document.querySelectorAll(".celsiusForecast").forEach(function(el) {el.classList.add("hidden")});
 }
- // F->C clicking the link will not refresh the page, show temperature (current and feels like in °C), change style of selected degrees (switch class active)
+ // F->C
+ // show temperature (current and feels like in °C), change style of selected degrees (switch class active)
 function changeToCelsius (event) {
   event.preventDefault();
   let currentTemperatureElement = document.querySelector("#current-temperature");
   let currentFeelsLikeElement = document.querySelector("#current-feels-like");
   currentTemperatureElement.innerHTML = currentCelsiusTemp;
   currentFeelsLikeElement.innerHTML = `${currentCelsiusTempFeelsLike} °C`;
-  celsius.classList.add("active");
-  fahrenheit.classList.remove("active");
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
+  document.querySelectorAll(".celsiusForecast").forEach(function(el) {el.classList.remove("hidden")});
+  document.querySelectorAll(".fahrenheitForecast").forEach(function(el) {el.classList.add("hidden")});
 }
 
 //--------------------------------
-
 // global variables:
 // celsius temperature - for units conversion
 // API key, endpoint and units
@@ -124,10 +163,14 @@ let currentCelsiusTempFeelsLike = null;
 let units = "metric";
 let apiKey = "addf72680d56ebf55846fea13531f597";
 let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
+let apiEndpointForecast = "https://api.openweathermap.org/data/2.5/forecast";
 
+// display weather in Prague on load
 let defaultCityName = "Prague";
-let apiUrl = `${apiEndpoint}?q=${defaultCityName}&appid=${apiKey}&units=${units}`;
+let apiUrl = `${apiEndpoint}?q=${defaultCityName}&appid=${apiKey}&units=${units}`
+let apiUrlForecast = `${apiEndpointForecast}?q=${defaultCityName}&appid=${apiKey}&units=${units}`
 axios.get(apiUrl).then(showWeather);
+axios.get(apiUrlForecast).then(showForecast);
 
 formatDate(Date.now());
 
